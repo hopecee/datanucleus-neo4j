@@ -935,6 +935,23 @@ public class QueryToCypherMapper extends AbstractExpressionEvaluator
                             return neo4jExpr;
                         }
                     }
+                    else if ("contains".equals(operation)) {
+                        if (args != null && args.size() == 1) {
+                            if (args.get(0) instanceof Literal) {
+                                Literal literalValue = (Literal) args.get(0);
+                                Neo4jLiteral neo4jLiteral = new Neo4jLiteral(literalValue.getLiteral());
+                                Operator OP_CONTAINS = new Operator("=~", 6);
+                                Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(invokedFieldExpr, neo4jLiteral, OP_CONTAINS);
+                                stack.push(neo4jExpr);
+                                return neo4jExpr;
+                            } else {
+                             // throw new NucleusException("");
+                            }
+                        } else {
+                          throw new NucleusException("Method String.contains has to have 1 args");
+                        }
+                    }
+                    
                 }
                 else if (Numeric.class.isAssignableFrom(invokedFieldExpr.getMemberMetaData().getType()))
                 {
