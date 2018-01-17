@@ -56,6 +56,12 @@ public class Neo4jBooleanExpression extends Neo4jExpression
         {
             cypherText = propName + " <= " + lit.getCypherText();
         }
+        // Surport for CONTAINS method. TODO Need to add 
+        // public static final DyadicOperator OP_CONTAINS = new DyadicOperator("=~", 3, false);
+        // to datanucleus-core/src/main/java/org/datanucleus/query/expression/Expression.java
+        else if ("=~".equals(op.toString())) {
+            cypherText = propName + " =~ '(?i).*" + lit.getValue() + ".*'";
+        }
     }
 
     public Neo4jBooleanExpression(Neo4jBooleanExpression expr1, Neo4jBooleanExpression expr2, Expression.DyadicOperator op)
