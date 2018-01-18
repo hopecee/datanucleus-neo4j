@@ -940,8 +940,10 @@ public class QueryToCypherMapper extends AbstractExpressionEvaluator
                             if (args.get(0) instanceof Literal) {
                                 Literal literalValue = (Literal) args.get(0);
                                 Neo4jLiteral neo4jLiteral = new Neo4jLiteral(literalValue.getLiteral());
-                                Operator OP_CONTAINS = new Operator("=~", 6);
-                                Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(invokedFieldExpr, neo4jLiteral, OP_CONTAINS);
+                                String propName = invokedFieldExpr.getFieldName();
+                                String value = literalValue.getLiteral().toString();
+                                String cypherText = propName + " =~ '(?i).*" + value + ".*'";
+                                Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(cypherText);
                                 stack.push(neo4jExpr);
                                 return neo4jExpr;
                             } else {
