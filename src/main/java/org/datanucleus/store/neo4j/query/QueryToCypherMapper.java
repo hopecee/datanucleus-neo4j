@@ -947,7 +947,7 @@ public class QueryToCypherMapper extends AbstractExpressionEvaluator
                             String value = neo4jExprArgs.get(0).toString();
                             String cypherText = propName + " =~ '(?i).*" + value + ".*'";
                             Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(cypherText);
-                           stack.push(neo4jExpr);
+                            stack.push(neo4jExpr);
                             return neo4jExpr;
                         }
                     } 
