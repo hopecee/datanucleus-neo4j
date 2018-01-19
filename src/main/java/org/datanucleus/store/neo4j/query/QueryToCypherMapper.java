@@ -956,17 +956,49 @@ public class QueryToCypherMapper extends AbstractExpressionEvaluator
                        if (neo4jExprArgs == null || neo4jExprArgs.isEmpty() || neo4jExprArgs.size() > 2) 
                        {
                             throw new NucleusException("Method String.matches has to have 1 args");
-                        } 
-                        else 
-                        { 
+                       } 
+                       else 
+                       { 
                             String propName = invokedFieldExpr.getFieldName();
                             String value = neo4jExprArgs.get(0).toString();
                             String cypherText = propName + " =~ '" + value + "'";
                             Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(cypherText);
                             stack.push(neo4jExpr);
                             return neo4jExpr;
-                        }
-                    }
+                     }
+                 }
+                 else if ("startsWith".equals(operation)) 
+                 {
+                       if (neo4jExprArgs == null || neo4jExprArgs.isEmpty() || neo4jExprArgs.size() > 2) 
+                       {
+                            throw new NucleusException("Method String.matches has to have 1 args");
+                       } 
+                       else 
+                       { 
+                            String propName = invokedFieldExpr.getFieldName();
+                            String value = neo4jExprArgs.get(0).toString();
+                            String cypherText = propName + " STARTS WITH '" + value + "'";
+                            Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(cypherText);
+                            stack.push(neo4jExpr);
+                            return neo4jExpr;
+                     }
+                }
+                 else if ("endsWith".equals(operation)) 
+                 {
+                       if (neo4jExprArgs == null || neo4jExprArgs.isEmpty() || neo4jExprArgs.size() > 2) 
+                       {
+                            throw new NucleusException("Method String.matches has to have 1 args");
+                       } 
+                       else 
+                       { 
+                            String propName = invokedFieldExpr.getFieldName();
+                            String value = neo4jExprArgs.get(0).toString();
+                            String cypherText = propName + " ENDS WITH '" + value + "'";
+                            Neo4jExpression neo4jExpr = new Neo4jBooleanExpression(cypherText);
+                            stack.push(neo4jExpr);
+                            return neo4jExpr;
+                     }
+                }
                 else if (Numeric.class.isAssignableFrom(invokedFieldExpr.getMemberMetaData().getType()))
                 {
                 }
